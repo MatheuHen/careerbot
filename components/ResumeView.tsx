@@ -15,27 +15,44 @@ function Field({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
+function formatText(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => formatText(item))
+      .filter(Boolean)
+      .join("\n");
+  }
+  if (value && typeof value === "object") {
+    return Object.entries(value as Record<string, unknown>)
+      .map(([key, item]) => `${key}: ${formatText(item)}`)
+      .join("\n");
+  }
+  if (value == null) return "";
+  return String(value);
+}
+
 export function resumeToPlainText(r: ResumeResult, nome: string): string {
   return [
     nome ? nome.toUpperCase() : "CURRÍCULO",
     "",
     "RESUMO PROFISSIONAL",
-    r.resumo,
+    formatText(r.resumo),
     "",
     "OBJETIVO",
-    r.objetivo,
+    formatText(r.objetivo),
     "",
     "FORMAÇÃO",
-    r.formacao,
+    formatText(r.formacao),
     "",
     "EXPERIÊNCIAS",
-    r.experiencias,
+    formatText(r.experiencias),
     "",
     "CURSOS",
-    r.cursos,
+    formatText(r.cursos),
     "",
     "HABILIDADES",
-    r.habilidades
+    formatText(r.habilidades)
   ].join("\n");
 }
 
@@ -47,17 +64,17 @@ export default function ResumeView({ resume }: { resume: ResumeResult }) {
           Análise do perfil
         </h4>
         <p className="mt-1 text-sm leading-relaxed text-brand-900">
-          {resume.analise}
+          {formatText(resume.analise)}
         </p>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field title="Resumo profissional">{resume.resumo}</Field>
-        <Field title="Objetivo profissional">{resume.objetivo}</Field>
-        <Field title="Formação">{resume.formacao}</Field>
-        <Field title="Experiências">{resume.experiencias}</Field>
-        <Field title="Cursos">{resume.cursos}</Field>
-        <Field title="Habilidades">{resume.habilidades}</Field>
+        <Field title="Resumo profissional">{formatText(resume.resumo)}</Field>
+        <Field title="Objetivo profissional">{formatText(resume.objetivo)}</Field>
+        <Field title="Formação">{formatText(resume.formacao)}</Field>
+        <Field title="Experiências">{formatText(resume.experiencias)}</Field>
+        <Field title="Cursos">{formatText(resume.cursos)}</Field>
+        <Field title="Habilidades">{formatText(resume.habilidades)}</Field>
       </div>
 
       <div className="rounded-xl border border-dashed border-brand-200 p-4">
