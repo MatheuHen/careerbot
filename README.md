@@ -43,6 +43,7 @@ npm run dev
 ```
 
 4. Abra [http://localhost:3000](http://localhost:3000).
+5. Abra https://careerbot-two.vercel.app/
 
 ## Observações
 
