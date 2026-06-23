@@ -77,7 +77,6 @@ export default function Home() {
   const [question, setQuestion] = useState<InterviewQuestion | null>(null);
   const [answer, setAnswer] = useState("");
   const [evaluation, setEvaluation] = useState<EvaluationResult | null>(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
 
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState<CareerBotAction | null>(null);
@@ -167,11 +166,8 @@ export default function Home() {
     setAnswer("");
     setLoading("start_interview");
     try {
-      const data = (await callApi("start_interview", {
-        index: questionIndex
-      })) as InterviewQuestion;
+      const data = (await callApi("start_interview")) as InterviewQuestion;
       setQuestion(data);
-      setQuestionIndex((i) => i + 1);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erro ao iniciar entrevista.");
     } finally {

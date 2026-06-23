@@ -22,7 +22,6 @@ type Body = {
   profile: ProfileData;
   question?: InterviewQuestion;
   answer?: string;
-  index?: number;
 };
 
 function notConfigured(): NextResponse {
