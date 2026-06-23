@@ -44,9 +44,3 @@ npm run dev
 
 4. Abra [http://localhost:3000](http://localhost:3000).
 5. Abra https://careerbot-two.vercel.app/
-
-## Observações
-
-- A chave da OpenAI é obrigatória. Sem ela, o app não gera currículo, pergunta nem avaliação.
-- A chave fica só no backend, na rota `app/api/careerbot/route.ts`.
-- O script `npm run lint` está pendente de configuração compatível com a versão atual do Next usada no projeto.
